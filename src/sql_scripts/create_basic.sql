@@ -52,7 +52,7 @@ create table users
     password varchar(255)
 );
 
-create table user_roles
+create table basic.public.user_roles
 (
     user_id varchar(255) not null
         constraint fkhfh9dx7w3ubf1co1vdev94g3f
@@ -63,7 +63,7 @@ create table user_roles
     primary key (user_id, role_id)
 );
 
-create table recipe
+create table basic.public.recipe
 (
     id            bigserial
         primary key,
@@ -80,7 +80,7 @@ create table recipe
             references users
 );
 
-create table recipe_ingredients
+create table basic.public.recipe_ingredients
 (
     recipe_id     bigint not null
         constraint fkarveb89dhxk087lbsoskneukg
@@ -90,7 +90,7 @@ create table recipe_ingredients
             references ingredients
 );
 
-create table recipe_tastes
+create table basic.public.recipe_tastes
 (
     recipe_id bigint not null
         constraint fkd5tavyw42kmlwu1kosw2cb124
@@ -100,7 +100,7 @@ create table recipe_tastes
             references tastes
 );
 
-create table recipe_on_reviews
+create table basic.public.recipe_on_reviews
 (
     id            bigserial
         primary key,
