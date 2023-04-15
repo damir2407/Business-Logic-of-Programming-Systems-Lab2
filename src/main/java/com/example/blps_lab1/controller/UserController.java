@@ -1,9 +1,14 @@
 package com.example.blps_lab1.controller;
 
+import com.example.blps_lab1.dto.request.LogOutRequest;
+import com.example.blps_lab1.dto.request.RefreshTokenRequest;
 import com.example.blps_lab1.dto.request.SignInRequest;
 import com.example.blps_lab1.dto.request.SignUpRequest;
+import com.example.blps_lab1.dto.response.NewTokenResponse;
 import com.example.blps_lab1.dto.response.SuccessResponse;
 import com.example.blps_lab1.model.Jwt;
+import com.example.blps_lab1.model.basic.RefreshToken;
+import com.example.blps_lab1.service.RefreshTokenService;
 import com.example.blps_lab1.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -17,16 +22,19 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
-    private final UserService userService;
+    private final UserService  userService;
+    private final RefreshTokenService refreshTokenService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RefreshTokenService refreshTokenService) {
         this.userService = userService;
+        this.refreshTokenService = refreshTokenService;
     }
 
     @PostMapping("login")
     public ResponseEntity<?> authUser(@Valid @RequestBody SignInRequest signInRequest) {
         Jwt jwt = userService.authUser(signInRequest);
-        return new ResponseEntity<>(new SuccessResponse(jwt.getToken()), HttpStatus.OK);
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(signInRequest.getLogin());
+        return new ResponseEntity<>(new NewTokenResponse(jwt.getToken(), refreshToken.getToken()), HttpStatus.OK);
     }
 
     @PostMapping()
@@ -35,5 +43,15 @@ public class UserController {
         return new ResponseEntity<>(new SuccessResponse("Пользователь успешно зарегистрирован!"), HttpStatus.CREATED);
     }
 
+    @PostMapping("logout")
+    public ResponseEntity<?> logOutUser(@Valid @RequestBody LogOutRequest logOutRequest) {
+        refreshTokenService.deleteByUserLogin(logOutRequest);
+        return new ResponseEntity<>(new SuccessResponse("Вы вышли из аккаунта"), HttpStatus.OK);
+    }
 
+    @PostMapping("refreshToken")
+    public ResponseEntity<?> refreshToken(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        NewTokenResponse newTokenResponse = refreshTokenService.createNewToken(refreshTokenRequest);
+        return new ResponseEntity<>(newTokenResponse, HttpStatus.CREATED);
+    }
 }

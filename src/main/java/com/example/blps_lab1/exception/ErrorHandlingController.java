@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ErrorHandlingController {
 
-    @ExceptionHandler({PermissionDeniedException.class})
+    @ExceptionHandler({PermissionDeniedException.class, TokenHasExpiredException.class})
     public ResponseEntity<ErrorResponse> handleForbiddenException(RuntimeException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);

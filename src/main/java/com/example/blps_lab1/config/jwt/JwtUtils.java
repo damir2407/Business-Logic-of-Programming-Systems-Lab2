@@ -16,17 +16,19 @@ import java.util.Date;
 public class JwtUtils {
     private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-    @Value("${app.jwtExpirationMs}")
+    @Value("${token.JWTExpirationMS}")
     private int jwtExpirationMs;
 
 
     public String generateJwtToken(Authentication authentication) {
         CookUserDetails userPrincipal = (CookUserDetails) authentication.getPrincipal();
-        return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date())
+        return generateJwtToken(userPrincipal.getUsername());
+    }
+    public String generateJwtToken(String login){
+        return Jwts.builder().setSubject(login).setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(key, SignatureAlgorithm.HS512).compact();
     }
-
 
     public boolean validateJwtToken(String jwt) {
         try {
