@@ -50,19 +50,6 @@ public class Recipe {
     private List<Ingredients> ingredients;
 
 
-    public Recipe(Long id, String description, Integer countPortion,
-                  User user, NationalCuisine nationalCuisine, Dish dish, List<Tastes> tastes,
-                  List<Ingredients> ingredients) {
-        this.id = id;
-        this.description = description;
-        this.countPortion = countPortion;
-        this.user = user;
-        this.nationalCuisine = nationalCuisine;
-        this.dish = dish;
-        this.tastes = tastes;
-        this.ingredients = ingredients;
-    }
-
     public Recipe(String description, Integer countPortion, User user,
                   NationalCuisine nationalCuisine, Dish dish, List<Tastes> tastes,
                   List<Ingredients> ingredients) {
