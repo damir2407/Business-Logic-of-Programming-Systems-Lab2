@@ -4,7 +4,7 @@ import com.example.blps_lab1.dto.request.AddTasteRequest;
 import com.example.blps_lab1.dto.request.UpdateTasteRequest;
 import com.example.blps_lab1.dto.response.SuccessResponse;
 import com.example.blps_lab1.dto.response.TasteResponse;
-import com.example.blps_lab1.model.Tastes;
+import com.example.blps_lab1.model.basic.Tastes;
 import com.example.blps_lab1.service.TastesService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

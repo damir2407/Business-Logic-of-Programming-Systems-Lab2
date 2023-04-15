@@ -3,13 +3,12 @@ package com.example.blps_lab1.service;
 import com.example.blps_lab1.dto.request.AddRecipeRequest;
 import com.example.blps_lab1.dto.request.UpdateRecipeRequest;
 import com.example.blps_lab1.exception.*;
-import com.example.blps_lab1.model.*;
-import com.example.blps_lab1.repository.RecipeRepository;
+import com.example.blps_lab1.model.basic.*;
+import com.example.blps_lab1.repository.basic.RecipeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

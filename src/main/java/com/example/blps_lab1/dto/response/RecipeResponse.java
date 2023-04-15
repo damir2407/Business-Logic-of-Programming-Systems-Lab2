@@ -1,6 +1,9 @@
 package com.example.blps_lab1.dto.response;
 
-import com.example.blps_lab1.model.*;
+import com.example.blps_lab1.model.basic.Dish;
+import com.example.blps_lab1.model.basic.Ingredients;
+import com.example.blps_lab1.model.basic.NationalCuisine;
+import com.example.blps_lab1.model.basic.Tastes;
 import lombok.Data;
 
 import java.util.List;

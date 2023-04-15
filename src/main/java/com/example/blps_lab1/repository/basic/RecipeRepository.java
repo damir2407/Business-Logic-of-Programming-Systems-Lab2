@@ -1,8 +1,8 @@
-package com.example.blps_lab1.repository;
+package com.example.blps_lab1.repository.basic;
 
-import com.example.blps_lab1.model.Dish;
-import com.example.blps_lab1.model.NationalCuisine;
-import com.example.blps_lab1.model.Recipe;
+import com.example.blps_lab1.model.basic.Dish;
+import com.example.blps_lab1.model.basic.NationalCuisine;
+import com.example.blps_lab1.model.basic.Recipe;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

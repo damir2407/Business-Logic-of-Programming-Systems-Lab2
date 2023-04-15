@@ -1,4 +1,4 @@
-package com.example.blps_lab1.model;
+package com.example.blps_lab1.model.basic;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -6,22 +6,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "ingredients")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Role {
+public class Ingredients {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private String description;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private ERole name;
-
-    public Role(Long id, ERole name) {
-        this.id = id;
+    public Ingredients(String name, String description) {
         this.name = name;
+        this.description = description;
     }
+
 
 }

@@ -4,7 +4,7 @@ import com.example.blps_lab1.dto.request.AddIngredientRequest;
 import com.example.blps_lab1.dto.request.UpdateIngredientRequest;
 import com.example.blps_lab1.dto.response.IngredientResponse;
 import com.example.blps_lab1.dto.response.SuccessResponse;
-import com.example.blps_lab1.model.Ingredients;
+import com.example.blps_lab1.model.basic.Ingredients;
 import com.example.blps_lab1.service.IngredientsService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

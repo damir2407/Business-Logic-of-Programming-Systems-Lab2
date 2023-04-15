@@ -1,21 +1,19 @@
-package com.example.blps_lab1.model;
+package com.example.blps_lab1.model.basic;
 
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
 
 @Entity
-@Table(name = "recipe")
+@Table(name = "recipe_on_reviews")
 @Getter
 @Setter
 @NoArgsConstructor
-@DynamicUpdate
-public class Recipe {
+public class RecipeOnReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,10 +49,12 @@ public class Recipe {
     )
     private List<Ingredients> ingredients;
 
+    private boolean updateRecipe;
 
-    public Recipe(Long id, String description, Integer countPortion,
-                  User user, NationalCuisine nationalCuisine, Dish dish, List<Tastes> tastes,
-                  List<Ingredients> ingredients) {
+
+    public RecipeOnReview(Long id, String description, Integer countPortion,
+                          User user, NationalCuisine nationalCuisine, Dish dish, List<Tastes> tastes,
+                          List<Ingredients> ingredients) {
         this.id = id;
         this.description = description;
         this.countPortion = countPortion;
@@ -65,9 +65,9 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public Recipe(String description, Integer countPortion, User user,
-                  NationalCuisine nationalCuisine, Dish dish, List<Tastes> tastes,
-                  List<Ingredients> ingredients) {
+    public RecipeOnReview(String description, Integer countPortion, User user,
+                          NationalCuisine nationalCuisine, Dish dish, List<Tastes> tastes,
+                          List<Ingredients> ingredients) {
         this.description = description;
         this.countPortion = countPortion;
         this.user = user;

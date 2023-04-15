@@ -1,7 +1,7 @@
 package com.example.blps_lab1.security;
 
-import com.example.blps_lab1.model.User;
-import com.example.blps_lab1.repository.UserRepository;
+import com.example.blps_lab1.model.basic.User;
+import com.example.blps_lab1.repository.basic.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

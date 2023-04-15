@@ -4,7 +4,7 @@ import com.example.blps_lab1.dto.request.AddDishRequest;
 import com.example.blps_lab1.dto.request.UpdateDishRequest;
 import com.example.blps_lab1.dto.response.DishResponse;
 import com.example.blps_lab1.dto.response.SuccessResponse;
-import com.example.blps_lab1.model.Dish;
+import com.example.blps_lab1.model.basic.Dish;
 import com.example.blps_lab1.service.DishService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

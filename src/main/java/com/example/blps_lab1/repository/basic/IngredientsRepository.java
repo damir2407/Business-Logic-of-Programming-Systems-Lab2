@@ -1,7 +1,6 @@
-package com.example.blps_lab1.repository;
+package com.example.blps_lab1.repository.basic;
 
-import com.example.blps_lab1.model.Ingredients;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import com.example.blps_lab1.model.basic.Ingredients;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

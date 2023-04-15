@@ -1,4 +1,4 @@
-package com.example.blps_lab1.model;
+package com.example.blps_lab1.model.basic;
 
 import jakarta.persistence.*;
 import lombok.Getter;
