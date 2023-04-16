@@ -6,7 +6,7 @@ import com.example.blps_lab1.dto.response.SuccessResponse;
 import com.example.blps_lab1.dto.response.TasteResponse;
 import com.example.blps_lab1.model.basic.Tastes;
 import com.example.blps_lab1.service.TastesService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

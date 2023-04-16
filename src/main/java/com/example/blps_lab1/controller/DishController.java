@@ -6,12 +6,13 @@ import com.example.blps_lab1.dto.response.DishResponse;
 import com.example.blps_lab1.dto.response.SuccessResponse;
 import com.example.blps_lab1.model.basic.Dish;
 import com.example.blps_lab1.service.DishService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Validated
 @RestController

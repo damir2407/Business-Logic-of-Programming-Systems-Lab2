@@ -6,7 +6,7 @@ import com.example.blps_lab1.dto.response.IngredientResponse;
 import com.example.blps_lab1.dto.response.SuccessResponse;
 import com.example.blps_lab1.model.basic.Ingredients;
 import com.example.blps_lab1.service.IngredientsService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

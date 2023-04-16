@@ -1,7 +1,7 @@
 package com.example.blps_lab1.model.basic;
 
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

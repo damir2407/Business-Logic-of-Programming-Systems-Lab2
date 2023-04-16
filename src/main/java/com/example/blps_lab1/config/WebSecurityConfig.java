@@ -1,5 +1,7 @@
 package com.example.blps_lab1.config;
 
+
+
 import com.example.blps_lab1.config.jwt.AuthEntryPointJwt;
 import com.example.blps_lab1.config.jwt.AuthTokenFilter;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +18,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableWebSecurity
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
+@EnableTransactionManagement
 public class WebSecurityConfig {
     private AuthEntryPointJwt unauthorizedHandler;
 
@@ -32,10 +36,12 @@ public class WebSecurityConfig {
         this.authenticationJwtTokenFilter = authenticationJwtTokenFilter;
     }
 
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
 
     @Bean

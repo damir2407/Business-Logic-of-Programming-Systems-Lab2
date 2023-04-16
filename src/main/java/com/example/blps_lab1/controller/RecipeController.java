@@ -7,8 +7,9 @@ import com.example.blps_lab1.dto.response.RecipeResponse;
 import com.example.blps_lab1.dto.response.SuccessResponse;
 import com.example.blps_lab1.model.basic.Recipe;
 import com.example.blps_lab1.service.RecipeService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

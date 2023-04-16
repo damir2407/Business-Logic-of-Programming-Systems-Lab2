@@ -1,7 +1,7 @@
 package com.example.blps_lab1.exception;
 
 import com.example.blps_lab1.dto.response.ErrorResponse;
-import jakarta.validation.ConstraintViolationException;
+import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;

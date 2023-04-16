@@ -1,7 +1,7 @@
 package com.example.blps_lab1.model.basic;
 
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +19,7 @@ public class Recipe {
     private Long id;
     @Column(length = 4096, nullable = false)
     private String description;
+    @Column(name = "count_portion")
     private Integer countPortion;
 
     @JoinColumn(nullable = false, name = "user_login")

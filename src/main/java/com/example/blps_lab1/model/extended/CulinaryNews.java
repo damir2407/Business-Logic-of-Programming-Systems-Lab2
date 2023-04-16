@@ -1,17 +1,11 @@
 package com.example.blps_lab1.model.extended;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.*;
 
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "culinary_news")
-@Getter
-@Setter
-@NoArgsConstructor
 public class CulinaryNews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +13,7 @@ public class CulinaryNews {
 
     private String name;
 
-    @Column(name = "login")
+    @Column(name ="user_login")
     private String user;
 
     private String description;
@@ -34,5 +28,6 @@ public class CulinaryNews {
         this.publicationDate = publicationDate;
     }
 
-
+    public CulinaryNews() {
+    }
 }

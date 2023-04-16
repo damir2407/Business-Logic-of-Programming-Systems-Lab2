@@ -1,6 +1,6 @@
 package com.example.blps_lab1.model.basic;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
@@ -19,6 +19,6 @@ public class RefreshToken {
     @Column(nullable = false, unique = true)
     private String token;
 
-    @Column(nullable = false)
+    @Column(nullable = false , name = "expiry_date")
     private Instant expiryDate;
 }
