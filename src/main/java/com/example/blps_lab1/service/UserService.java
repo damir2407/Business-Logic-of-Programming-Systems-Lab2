@@ -70,7 +70,7 @@ public class UserService {
     }
 
 
-    public User saveUser(SignUpRequest signUpRequest) {
+    public User saveNewUser(SignUpRequest signUpRequest) {
         if (checkLoginOnExist(signUpRequest.getLogin()))
             throw new ResourceAlreadyExistException("Этот логин уже занят! Попробуйте другой");
 
@@ -88,6 +88,12 @@ public class UserService {
 
         userRepository.save(user);
         return user;
+    }
+
+    public void incrementCulinaryNewsCounter(String user_login) {
+        User user = findUserByLogin(user_login);
+        user.setCulinaryNewsCount(user.getCulinaryNewsCount() + 1);
+        userRepository.save(user);
     }
 
 }

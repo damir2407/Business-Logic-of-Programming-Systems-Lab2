@@ -98,7 +98,6 @@ public class RecipeService {
         Sort.Direction direction = Sort.Direction.fromString(sortOrder);
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "id"));
         return recipeRepository.findAll(pageable);
-
     }
 
 }
