@@ -4,18 +4,21 @@ import com.example.blps_lab1.dto.request.AddRecipeRequest;
 import com.example.blps_lab1.dto.request.UpdateRecipeRequest;
 import com.example.blps_lab1.exception.*;
 import com.example.blps_lab1.model.basic.*;
+import com.example.blps_lab1.repository.basic.RecipeOnReviewRepository;
 import com.example.blps_lab1.repository.basic.RecipeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
 public class RecipeService {
     private final RecipeRepository recipeRepository;
+    private final RecipeOnReviewRepository recipeOnReviewRepository;
 
     private final UserService userService;
 
@@ -28,10 +31,11 @@ public class RecipeService {
     private final NationalCuisineService nationalCuisineService;
 
 
-    public RecipeService(RecipeRepository recipeRepository, UserService userService, DishService dishService,
+    public RecipeService(RecipeRepository recipeRepository, RecipeOnReviewRepository recipeOnReviewRepository, UserService userService, DishService dishService,
                          IngredientsService ingredientsService, TastesService tastesService,
                          NationalCuisineService nationalCuisineService) {
         this.recipeRepository = recipeRepository;
+        this.recipeOnReviewRepository = recipeOnReviewRepository;
         this.userService = userService;
         this.dishService = dishService;
         this.ingredientsService = ingredientsService;
@@ -39,19 +43,17 @@ public class RecipeService {
         this.nationalCuisineService = nationalCuisineService;
     }
 
-
-    public Recipe saveRecipe(String login, AddRecipeRequest addRecipeRequest) {
+    public RecipeOnReview saveRecipe(String login, AddRecipeRequest addRecipeRequest) {
         Dish dish = dishService.findDishByName(addRecipeRequest.getDishName());
         User user = userService.findUserByLogin(login);
         NationalCuisine nationalCuisine = nationalCuisineService.findNationalCuisineByName(addRecipeRequest.getNationalCuisineName());
         List<Tastes> tastesList = tastesService.findAllTastesByTasteNames(addRecipeRequest.getTastesNames());
         List<Ingredients> ingredientsList = ingredientsService.findAllIngredientsByNames(addRecipeRequest.getIngredientsNames());
-        Recipe recipe = new Recipe(addRecipeRequest.getDescription(),
+        RecipeOnReview recipe = new RecipeOnReview(addRecipeRequest.getDescription(),
                 addRecipeRequest.getCountPortion(), user, nationalCuisine, dish, tastesList, ingredientsList);
-        recipeRepository.save(recipe);
+        recipeOnReviewRepository.save(recipe);
         return recipe;
     }
-
     public Recipe findRecipeById(Long id) {
         return recipeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Рецепт с номером " + id + " не найден в базе!"));
     }
@@ -73,9 +75,9 @@ public class RecipeService {
     public void updateRecipe(String login, Long id, UpdateRecipeRequest updateRecipeRequest) {
         Recipe recipe = findRecipeById(id);
         User user = userService.findUserByLogin(login);
-
         checkUserOnRecipeOwner(user, recipe);
-
+        RecipeOnReview recipeOnReview = new RecipeOnReview();
+        recipeOnReview.setId(id);
         Dish dish = dishService.findDishByName(updateRecipeRequest.getDishName());
         NationalCuisine nationalCuisine = nationalCuisineService.
                 findNationalCuisineByName(updateRecipeRequest.getNationalCuisineName());
@@ -83,15 +85,15 @@ public class RecipeService {
                 findAllTastesByTasteNames(updateRecipeRequest.getTastesNames());
         List<Ingredients> ingredientsList = ingredientsService.
                 findAllIngredientsByNames(updateRecipeRequest.getIngredientsNames());
-
-        recipe.setDish(dish);
-        recipe.setNationalCuisine(nationalCuisine);
-        recipe.setIngredients(ingredientsList);
-        recipe.setTastes(tastesList);
-        recipe.setDescription(updateRecipeRequest.getDescription());
-        recipe.setCountPortion(updateRecipeRequest.getCountPortion());
-
-        recipeRepository.save(recipe);
+        recipeOnReview.setUser(user);
+        recipeOnReview.setDish(dish);
+        recipeOnReview.setNationalCuisine(nationalCuisine);
+        recipeOnReview.setIngredients(ingredientsList);
+        recipeOnReview.setTastes(tastesList);
+        recipeOnReview.setDescription(updateRecipeRequest.getDescription());
+        recipeOnReview.setCountPortion(updateRecipeRequest.getCountPortion());
+        recipeOnReview.setUpdateRecipe(true);
+        recipeOnReviewRepository.save(recipeOnReview);
     }
 
     public Page<Recipe> getAllRecipes(int page, int size, String sortOrder) {

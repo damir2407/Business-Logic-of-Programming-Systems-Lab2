@@ -5,10 +5,12 @@ import com.example.blps_lab1.model.basic.Ingredients;
 import com.example.blps_lab1.model.basic.NationalCuisine;
 import com.example.blps_lab1.model.basic.Tastes;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
 @Data
+@ToString
 public class RecipeResponse {
 
     private Long recipeNumber;

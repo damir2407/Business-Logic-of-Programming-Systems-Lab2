@@ -2,10 +2,16 @@ package com.example.blps_lab1.model.basic;
 
 
 import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,6 +19,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@DynamicUpdate
+@ToString
+
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +43,7 @@ public class Recipe {
     @ManyToOne(fetch = FetchType.EAGER)
     private Dish dish;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(cascade = {CascadeType.REFRESH})
     @JoinTable(
             name = "recipe_tastes",
@@ -42,6 +52,7 @@ public class Recipe {
     )
     private List<Tastes> tastes;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(cascade = {CascadeType.REFRESH})
     @JoinTable(
             name = "recipe_ingredients",
@@ -61,6 +72,21 @@ public class Recipe {
         this.dish = dish;
         this.tastes = tastes;
         this.ingredients = ingredients;
+    }
+
+    public List<String> getAllTastesName() {
+        List<String> list = new ArrayList<>();
+        for (Tastes tastes1 : tastes) {
+            list.add(tastes1.getTaste());
+        }
+        return list;
+    }
+    public List<String> getAllIngredientsName() {
+        List<String> list = new ArrayList<>();
+        for (Ingredients ingredients1 : ingredients) {
+            list.add(ingredients1.getName());
+        }
+        return list;
     }
 
 }
