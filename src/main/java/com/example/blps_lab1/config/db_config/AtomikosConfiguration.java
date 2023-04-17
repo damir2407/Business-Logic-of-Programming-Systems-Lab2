@@ -13,6 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
+import javax.transaction.SystemException;
 import javax.transaction.TransactionManager;
 import javax.transaction.UserTransaction;
 
@@ -35,7 +36,7 @@ public class AtomikosConfiguration {
     }
 
     @Bean(name = "userTransaction")
-    public UserTransaction userTransaction() throws Throwable {
+    public UserTransaction userTransaction() throws SystemException {
         UserTransactionImp userTransactionImp = new UserTransactionImp();
         userTransactionImp.setTransactionTimeout(10000);
         return userTransactionImp;
@@ -43,7 +44,7 @@ public class AtomikosConfiguration {
 
 
     @Bean(name = "atomikosTransactionManager")
-    public TransactionManager atomikosTransactionManager() throws Throwable {
+    public TransactionManager atomikosTransactionManager()  {
         UserTransactionManager userTransactionManager = new UserTransactionManager();
         userTransactionManager.setForceShutdown(false);
 
@@ -54,7 +55,7 @@ public class AtomikosConfiguration {
 
     @Bean(name = "transactionManager")
     @DependsOn({ "userTransaction", "atomikosTransactionManager" })
-    public PlatformTransactionManager transactionManager() throws Throwable {
+    public PlatformTransactionManager transactionManager() throws SystemException {
         UserTransaction userTransaction = userTransaction();
 
         AtomikosJtaPlatform.transaction = userTransaction;
