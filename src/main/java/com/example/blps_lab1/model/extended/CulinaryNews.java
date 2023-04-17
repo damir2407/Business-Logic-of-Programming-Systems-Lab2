@@ -1,11 +1,16 @@
 package com.example.blps_lab1.model.extended;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "culinary_news")
+@Data
+@NoArgsConstructor
 public class CulinaryNews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +33,5 @@ public class CulinaryNews {
         this.publicationDate = publicationDate;
     }
 
-    public CulinaryNews() {
-    }
+
 }

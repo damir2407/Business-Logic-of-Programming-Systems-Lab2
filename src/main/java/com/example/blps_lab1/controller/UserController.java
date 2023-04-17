@@ -39,7 +39,7 @@ public class UserController {
 
     @PostMapping()
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        userService.saveUser(signUpRequest);
+        userService.saveNewUser(signUpRequest);
         return new ResponseEntity<>(new SuccessResponse("Пользователь успешно зарегистрирован!"), HttpStatus.CREATED);
     }
 
