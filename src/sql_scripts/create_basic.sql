@@ -49,7 +49,8 @@ create table users
     login    varchar(255) not null
         primary key,
     email    varchar(255),
-    password varchar(255)
+    password varchar(255),
+    culinary_news_count int DEFAULT 0
 );
 
 create table basic.public.user_roles
@@ -79,6 +80,24 @@ create table basic.public.recipe
         constraint fkiwcy2cd7acsb9oheknkgl409
             references users
 );
+create table basic.public.recipe_on_reviews
+(
+    id            bigserial
+        primary key,
+    count_portion integer,
+    description   varchar(4096) not null,
+    update_recipe boolean       not null,
+    dish_id       bigint        not null
+        constraint fkmxtk273l1qmxs76klcbepwbsn
+            references dish,
+    cuisine_id    bigint        not null
+        constraint fkmpely652jq6ak8m97sf67xwkp
+            references national_cuisine,
+    user_login    varchar(255)  not null
+        constraint fk54yh8wcwdp8slrii1ecs9xsmq
+            references users
+);
+
 
 create table basic.public.recipe_ingredients
 (
@@ -98,24 +117,6 @@ create table basic.public.recipe_tastes
     taste_id  bigint not null
         constraint fkbby7brghh3e52bpu6hut2sp2k
             references tastes
-);
-
-create table basic.public.recipe_on_reviews
-(
-    id            bigserial
-        primary key,
-    count_portion integer,
-    description   varchar(4096) not null,
-    update_recipe boolean       not null,
-    dish_id       bigint        not null
-        constraint fkmxtk273l1qmxs76klcbepwbsn
-            references dish,
-    cuisine_id    bigint        not null
-        constraint fkmpely652jq6ak8m97sf67xwkp
-            references national_cuisine,
-    user_login    varchar(255)  not null
-        constraint fk54yh8wcwdp8slrii1ecs9xsmq
-            references users
 );
 
 

@@ -50,7 +50,6 @@ public class RefreshTokenService {
             refreshTokenRepository.delete(refreshToken);
             throw new TokenHasExpiredException(refreshToken.getToken(), "Refresh token was expired. Please make a new signin request");
         }
-        System.out.println(refreshToken.getUser().getLogin());
         refreshTokenRepository.deleteByUser(refreshToken.getUser());
         refreshToken = createRefreshToken(refreshToken.getUser().getLogin());
         String token = jwtUtils.generateJwtToken(refreshToken.getUser().getLogin());

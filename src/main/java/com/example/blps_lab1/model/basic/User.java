@@ -12,7 +12,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class User {
-
     @Id
     private String login;
 
@@ -25,6 +24,9 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @Column(name = "culinary_news_count")
+    private Integer culinaryNewsCount;
 
 
 
@@ -41,5 +43,11 @@ public class User {
         this.roles = roles;
     }
 
-
+    public User(String login, String password, String email, Set<Role> roles, Integer culinaryNewsCount) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
+        this.culinaryNewsCount = culinaryNewsCount;
+    }
 }

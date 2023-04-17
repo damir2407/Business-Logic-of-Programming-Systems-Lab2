@@ -2,6 +2,7 @@ package com.example.blps_lab1.config.jwt;
 
 import com.example.blps_lab1.security.CookUserDetailsService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class AuthTokenFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
 
@@ -44,7 +46,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
         }
         filterChain.doFilter(request, response);
 

@@ -59,7 +59,6 @@ public class TasteController {
     public ResponseEntity<?> getTaste(@PathVariable Long tasteId) {
 
         Tastes taste = tastesService.getTaste(tasteId);
-        System.out.println(taste.getTaste());
         return new ResponseEntity<>(new TasteResponse(taste.getId(), taste.getTaste()), HttpStatus.OK);
     }
 }
