@@ -64,6 +64,9 @@ public class RecipeOnReviewService {
         recipe1.setCountPortion(recipe.get().getCountPortion());
         recipe1.setNationalCuisine(nationalCuisine);
         recipe1.setUser(user);
+        if (recipe.get().getUpdateRecipe()!=null){
+            recipeRepository.deleteById(recipe.get().getUpdateRecipe());
+        }
         recipeRepository.save(recipe1);
         recipeOnReviewRepository.deleteById(id);
     }

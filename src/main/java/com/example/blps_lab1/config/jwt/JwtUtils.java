@@ -1,6 +1,7 @@
 package com.example.blps_lab1.config.jwt;
 
 import com.example.blps_lab1.security.CookUserDetails;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -31,7 +32,6 @@ public class JwtUtils {
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(key, SignatureAlgorithm.HS512).compact();
     }
-
     public boolean validateJwtToken(String jwt) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt);

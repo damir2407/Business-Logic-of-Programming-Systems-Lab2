@@ -92,7 +92,7 @@ public class RecipeService {
         recipeOnReview.setTastes(tastesList);
         recipeOnReview.setDescription(updateRecipeRequest.getDescription());
         recipeOnReview.setCountPortion(updateRecipeRequest.getCountPortion());
-        recipeOnReview.setUpdateRecipe(true);
+        recipeOnReview.setUpdateRecipe(id);
         recipeOnReviewRepository.save(recipeOnReview);
     }
 

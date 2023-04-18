@@ -1,9 +1,11 @@
 package com.example.blps_lab1.model.basic;
 
 import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.Set;
 
 @Entity
@@ -26,8 +28,7 @@ public class User {
     private Set<Role> roles;
 
     @Column(name = "culinary_news_count")
-    private Integer culinaryNewsCount;
-
+    private Integer culinaryNewsCount = 0;
 
 
     public User(String login, String password, String email) {

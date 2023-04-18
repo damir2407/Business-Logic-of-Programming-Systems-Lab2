@@ -54,8 +54,7 @@ public class RecipeOnReview {
             inverseJoinColumns = {@JoinColumn(name = "ingredient_id")}
     )
     private List<Ingredients> ingredients;
-
-    private boolean updateRecipe;
+    private Long updateRecipe;
 
     public RecipeOnReview(String description, Integer countPortion, User user,
                           NationalCuisine nationalCuisine, Dish dish, List<Tastes> tastes,

@@ -8,6 +8,7 @@ import com.example.blps_lab1.exception.TokenHasExpiredException;
 import com.example.blps_lab1.model.basic.RefreshToken;
 import com.example.blps_lab1.repository.basic.RefreshTokenRepository;
 import com.example.blps_lab1.repository.basic.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,6 @@ public class RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
     private final JwtUtils jwtUtils;
-
     public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository, JwtUtils jwtUtils) {
         this.refreshTokenRepository = refreshTokenRepository;
         this.userRepository = userRepository;

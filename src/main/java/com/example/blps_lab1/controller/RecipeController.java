@@ -81,7 +81,6 @@ public class RecipeController {
                                            @RequestParam(defaultValue = "DESC") Sort.Direction sortOrder) {
         List<Recipe> allRecipes = recipeService.getAllRecipes(page, size, sortOrder.toString()).getContent();
         List<RecipeResponse> recipeResponses = new ArrayList<>();
-        System.out.println(allRecipes.get(0).getTastes());
         allRecipes.forEach(recipe -> recipeResponses.add(new RecipeResponse(recipe.getId(),
                 recipe.getDescription(), recipe.getCountPortion(), recipe.getUser().getLogin(),
                 recipe.getNationalCuisine(), recipe.getDish(), recipe.getTastes(),

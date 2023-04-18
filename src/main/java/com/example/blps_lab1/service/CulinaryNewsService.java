@@ -36,7 +36,7 @@ public class CulinaryNewsService {
 
     public Page<CulinaryNews> getAllCulinaryNews(int page, int size, String sortOrder) {
         Sort.Direction direction = Sort.Direction.fromString(sortOrder);
-        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "publication_date"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "publicationDate"));
         return culinaryNewsRepository.findAll(pageable);
     }
 
