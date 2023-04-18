@@ -70,21 +70,32 @@ public class UserService {
     }
 
 
-    public User saveNewUser(SignUpRequest signUpRequest) {
+    public User saveNewUser(SignUpRequest signUpRequest, ERole role) {
         if (checkLoginOnExist(signUpRequest.getLogin()))
             throw new ResourceAlreadyExistException("Этот логин уже занят! Попробуйте другой");
 
         if (checkEmailOnExist(signUpRequest.getEmail()))
             throw new ResourceAlreadyExistException("Эта почта уже занята! Попробуйте другую");
 
-        Set<Role> user_roles = new HashSet<>();
-        Role userRole = roleRepository
-                .findByName(ERole.ROLE_USER)
-                .orElseThrow(() -> new ResourceNotFoundException("Роль USER не найдена!"));
-        user_roles.add(userRole);
+        Set<Role> roles = new HashSet<>();
+        switch (role) {
+            case ROLE_USER -> {
+                Role userRole = roleRepository
+                        .findByName(ERole.ROLE_USER)
+                        .orElseThrow(() -> new ResourceNotFoundException("Роль USER не найдена!"));
+                roles.add(userRole);
+            }
+            case ROLE_ADMIN -> {
+                Role adminRole = roleRepository
+                        .findByName(ERole.ROLE_ADMIN)
+                        .orElseThrow(() -> new ResourceNotFoundException("Роль ADMIN не найдена!"));
+                roles.add(adminRole);
+            }
+            default -> throw new ResourceNotFoundException("Роль не найдена!");
+        }
 
         User user = new User(signUpRequest.getLogin(), passwordEncoder.encode(signUpRequest.getPassword()),
-                signUpRequest.getEmail(), user_roles);
+                signUpRequest.getEmail(), roles);
 
         userRepository.save(user);
         return user;
