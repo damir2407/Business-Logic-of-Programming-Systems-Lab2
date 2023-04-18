@@ -26,7 +26,7 @@ public class CulinaryNewsService {
     }
 
 
-    @Transactional(transactionManager = "atomikosTransactionManager")
+    @Transactional(transactionManager = "transactionManager")
     public CulinaryNews saveCulinaryNew(String user_login, AddCulinaryNewRequest addCulinaryNewRequest) {
         CulinaryNews culinaryNews = new CulinaryNews(addCulinaryNewRequest.getName(), user_login, addCulinaryNewRequest.getDescription(), new Timestamp(System.currentTimeMillis()));
         culinaryNewsRepository.save(culinaryNews);
