@@ -1,0 +1,1276 @@
+{
+	"info": {
+		"_postman_id": "42c1121c-a0a8-405c-90d3-4129fd9ed6b2",
+		"name": "BLPS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18584643"
+	},
+	"item": [
+		{
+			"name": "UserController",
+			"item": [
+				{
+					"name": "SignUpRequest",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\" : \"admin\",\r\n    \"password\" : \"adminadmin\",\r\n    \"email\": \"iop2@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignInRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonObject = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"token\", jsonObject.message);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\" : \"admin\",\r\n    \"password\" : \"adminadmin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RefreshToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonObject = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"token\", jsonObject.message);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\" : \"feb75f16-437e-491e-a4a6-5ad19a130eb4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/refreshToken",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"refreshToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogOut",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonObject = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"token\", jsonObject.message);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\" : \"susaasus1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxODU5MywiZXhwIjoxNjgxODE5NDkzfQ.4LnFsog5HQix5116pD1ncZ7KS50SQGCO6tDvWpBMY4-MW1deeQYDEEzHOvPF5w6JCRFp9youkFvfTBtnv5n2vA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\" : \"admin2\",\r\n    \"password\" : \"adminadmin\",\r\n    \"email\": \"iop3@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/admin-create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"admin-create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RecipeController",
+			"item": [
+				{
+					"name": "AddRecipeRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxOTgzNSwiZXhwIjoxNjgxODIwNzM1fQ.PnsJOt_rnGAysQzz8ynJAi9E1RRMIauXVzjOlB83Ew9qkzvnVDbc3xo5vm8bv3Nz3Ke1GhAytJ77GSRJtPm_pQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dishName\" : \"Борщ\",\r\n    \"description\" : \"Чтобвыыd as sa борщ получился густым, сварите в нем одну целую картофелину. Когда борщ готов, достаньте её, хорошенько разомните и верните в борщ.Прыфвфывфи варке свеклы её цвет и цвет её отвара приглуfsdшается. Чтобы борщ получился сочного яркого цвета, примерно четверть свеклы, измельченной для борща, положите в миску, залейте кипятком и оставьте не менее, чем на 20 мин. Когда борщ уже сняли с огня, отfsdfsdожмите свеклу и полученный сок влейте в борщ.Для улучшения вкусовых качеств борща рекомендуют взять кусочек хорошего сала растереть его с солью и чесноком, полученную смесь добавить в почти готовый борщ. Не подавайте борщ сразу после завершения готовки! Дайте борщу настояться хотя бы около часа.\",\r\n    \"countPortion\": 4,\r\n    \"nationalCuisineName\": \"Russian\",\r\n    \"tastesNames\": [\"Соленый\", \"Сладкий\",\"Пряный\"],\r\n    \"ingredientsNames\": [\"Говядина\",\"Морковь\",\"Картофель\",\"Помидор\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/recipe",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRecipeRequest",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/recipe/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipe",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateRecipeRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxOTgzNSwiZXhwIjoxNjgxODIwNzM1fQ.PnsJOt_rnGAysQzz8ynJAi9E1RRMIauXVzjOlB83Ew9qkzvnVDbc3xo5vm8bv3Nz3Ke1GhAytJ77GSRJtPm_pQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dishName\": \"Борщ\",\r\n    \"description\": \"Борщ очень вкусный!\",\r\n    \"countPortion\": 17,\r\n    \"nationalCuisineName\": \"Russian\",\r\n    \"tastesNames\": [\"Соленый\",\"Кислый\",\"Горький\"],\r\n    \"ingredientsNames\": [\"Курица\",\"Картофель\",\"Помидор\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/recipe?id=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipe"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllRecipesRequest",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/recipe?page=0&size=10&sortOrder=ASC",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipe"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sortOrder",
+									"value": "ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteRecipeRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/recipe?id=4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipe"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllRecipesCheck",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxODU5MywiZXhwIjoxNjgxODE5NDkzfQ.4LnFsog5HQix5116pD1ncZ7KS50SQGCO6tDvWpBMY4-MW1deeQYDEEzHOvPF5w6JCRFp9youkFvfTBtnv5n2vA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/recipe/review?page=0&size=10&sortOrder=ASC",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipe",
+								"review"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sortOrder",
+									"value": "ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AcceptRecipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxOTgzNSwiZXhwIjoxNjgxODIwNzM1fQ.PnsJOt_rnGAysQzz8ynJAi9E1RRMIauXVzjOlB83Ew9qkzvnVDbc3xo5vm8bv3Nz3Ke1GhAytJ77GSRJtPm_pQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/recipe/accept/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipe",
+								"accept",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeclineRecipe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxOTEyNSwiZXhwIjoxNjgxODIwMDI1fQ.5R7kOBxIMR_GeknaVgXOjVJ5tUbe5t4rap13N-nqabZJSavYnKPn7Zlf6aIYE3-d3PNLsu_zmPbnVmxFTRh7hQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/recipe/decline/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"recipe",
+								"decline",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CuisineController",
+			"item": [
+				{
+					"name": "GetCuisineRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxODA5NywiZXhwIjoxNjgxODE4OTk3fQ.ChwCPe3Hp-pe8a4DL97KlIDkzA2_W5Zuy2v0vox0YYa6BLkY-1c6zdoY3nQ5p8tDC6Yw3f7g3_Y-FhYdOKXtbA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cuisine/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cuisine",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCuisinesRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxODA5NywiZXhwIjoxNjgxODE4OTk3fQ.ChwCPe3Hp-pe8a4DL97KlIDkzA2_W5Zuy2v0vox0YYa6BLkY-1c6zdoY3nQ5p8tDC6Yw3f7g3_Y-FhYdOKXtbA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cuisine?page=1&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cuisine"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCuisineRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxODA5NywiZXhwIjoxNjgxODE4OTk3fQ.ChwCPe3Hp-pe8a4DL97KlIDkzA2_W5Zuy2v0vox0YYa6BLkY-1c6zdoY3nQ5p8tDC6Yw3f7g3_Y-FhYdOKXtbA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cuisine?cuisineId=22",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cuisine"
+							],
+							"query": [
+								{
+									"key": "cuisineId",
+									"value": "22"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCuisineRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxODA5NywiZXhwIjoxNjgxODE4OTk3fQ.ChwCPe3Hp-pe8a4DL97KlIDkzA2_W5Zuy2v0vox0YYa6BLkY-1c6zdoY3nQ5p8tDC6Yw3f7g3_Y-FhYdOKXtbA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cuisine\": \"Arabicc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/cuisine?cuisineId=22",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cuisine"
+							],
+							"query": [
+								{
+									"key": "cuisineId",
+									"value": "22"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddCuisineRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxODA5NywiZXhwIjoxNjgxODE4OTk3fQ.ChwCPe3Hp-pe8a4DL97KlIDkzA2_W5Zuy2v0vox0YYa6BLkY-1c6zdoY3nQ5p8tDC6Yw3f7g3_Y-FhYdOKXtbA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cuisine\": \"Arabic\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/cuisine",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cuisine"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DishController",
+			"item": [
+				{
+					"name": "GetDishRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/dish/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dish",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetDishesRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/dish?page=1&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dish"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteDIshRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/dish?dishId=19",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dish"
+							],
+							"query": [
+								{
+									"key": "dishId",
+									"value": "19"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateDishRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"беш\",\r\n    \"description\": \"lol\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/dish?dishId=19",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dish"
+							],
+							"query": [
+								{
+									"key": "dishId",
+									"value": "19"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddDishRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dishName\" : \"бешбармак\",\r\n    \"description\" : \"Блюдо из теста и конины\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/dish",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dish"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IngredientController",
+			"item": [
+				{
+					"name": "AddIngredientRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ingredientName\": \"Конина\",\r\n    \"description\": \"Мясо коня - вкусная вещь\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/ingredient",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ingredient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteIngredientRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/ingredient?ingredientId=33",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ingredient"
+							],
+							"query": [
+								{
+									"key": "ingredientId",
+									"value": "33"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateIngredientRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Что появилось раньше? Курица или яйцо?\",\r\n    \"name\": \"Курочка\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/ingredient?ingredientId=33",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ingredient"
+							],
+							"query": [
+								{
+									"key": "ingredientId",
+									"value": "33"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetIngredientRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/ingredient/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ingredient",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllIngredientsRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/ingredient?page=1&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ingredient"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TasteController",
+			"item": [
+				{
+					"name": "GetTasteRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/taste/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"taste",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTastesRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/taste?page=3&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"taste"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "3"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTasteRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/taste?tasteId=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"taste"
+							],
+							"query": [
+								{
+									"key": "tasteId",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTasteRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgxNjc2NSwiZXhwIjoxNjgxODE3NjY1fQ.OVrTBUcbR4H_ON7h83gXgwN-lYpydtymEBVTQkxZWnfiQEOniIMQpA_VYcuqGRK_xPG74BnNaUYJZjosDHC3Vg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"taste\": \"Клееевый\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/taste?tasteId=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"taste"
+							],
+							"query": [
+								{
+									"key": "tasteId",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddTasteRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"taste\": \"Клевый\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/taste",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"taste"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CulinaryNewsController",
+			"item": [
+				{
+					"name": "AddCulinaryNew",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTgyMTU0MSwiZXhwIjoxNjgxODIyNDQxfQ.p9WmYYLAZN5wSZNTUb3aN5GWloDpiYEpZsQ2FU3T2uLbbTTTFuCGlBpJOjhRiR-_IOTYrzIpbmOExDRhYgc5Fg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"POPA\",\r\n    \"description\": \"Вставить текст\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/culinary-news",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"culinary-news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCulinaryNew",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/culinary-news/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"culinary-news",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllCulinaryNews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/culinary-news?page=0&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"culinary-news"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
