@@ -37,11 +37,11 @@ public class IngredientsService {
         return ingredientsList;
     }
 
-    public void saveIngredient(AddIngredientRequest addIngredientRequest) {
+    public Ingredients saveIngredient(AddIngredientRequest addIngredientRequest) {
         Ingredients ingredient = new Ingredients(addIngredientRequest.getIngredientName(), addIngredientRequest.getDescription());
         if (ingredientsRepository.existsIngredientsByName(addIngredientRequest.getIngredientName()))
             throw new ResourceAlreadyExistException("Ингредиент " + addIngredientRequest.getIngredientName() + " уже есть в базе данных!");
-        ingredientsRepository.save(ingredient);
+        return ingredientsRepository.save(ingredient);
     }
 
     public void deleteIngredient(Long ingredientId) {
@@ -50,7 +50,7 @@ public class IngredientsService {
         ingredientsRepository.deleteById(ingredientId);
     }
 
-    public void updateIngredient(Long ingredientId, UpdateIngredientRequest updateIngredientRequest) {
+    public Ingredients updateIngredient(Long ingredientId, UpdateIngredientRequest updateIngredientRequest) {
         Ingredients ingredient = ingredientsRepository.findIngredientsById(ingredientId).orElseThrow(() -> new ResourceNotFoundException("Ингредиент с id=" + ingredientId + " не существует!"));
         if (updateIngredientRequest.getName() != null) {
             ingredient.setName(updateIngredientRequest.getName());
@@ -58,7 +58,7 @@ public class IngredientsService {
         if (updateIngredientRequest.getDescription() != null) {
             ingredient.setDescription(updateIngredientRequest.getDescription());
         }
-        ingredientsRepository.save(ingredient);
+        return ingredientsRepository.save(ingredient);
     }
 
     public Ingredients getIngredient(Long ingredientId) {

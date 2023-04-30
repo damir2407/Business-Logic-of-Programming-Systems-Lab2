@@ -23,11 +23,11 @@ public class NationalCuisineService {
         return nationalCuisineRepository.findNationalCuisineByCuisine(cuisine).orElseThrow(() -> new ResourceNotFoundException("Нац. кухня " + cuisine + " не существует!"));
     }
 
-    public void saveCuisine(AddCuisineRequest addCuisineRequest) {
+    public NationalCuisine saveCuisine(AddCuisineRequest addCuisineRequest) {
         NationalCuisine cuisine = new NationalCuisine(addCuisineRequest.getCuisine());
         if (nationalCuisineRepository.existsNationalCuisineByCuisine(addCuisineRequest.getCuisine()))
             throw new ResourceAlreadyExistException("Национальная кухня " + addCuisineRequest.getCuisine() + " уже есть в базе данных!");
-        nationalCuisineRepository.save(cuisine);
+        return nationalCuisineRepository.save(cuisine);
     }
 
     public void deleteCuisine(Long cuisineId) {
@@ -36,10 +36,10 @@ public class NationalCuisineService {
         nationalCuisineRepository.deleteById(cuisineId);
     }
 
-    public void updateCuisine(Long cuisineId, UpdateCuisineRequest updateCuisineRequest) {
+    public NationalCuisine updateCuisine(Long cuisineId, UpdateCuisineRequest updateCuisineRequest) {
         NationalCuisine nationalCuisine = nationalCuisineRepository.findNationalCuisineById(cuisineId).orElseThrow(() -> new ResourceNotFoundException("Кухни с id=" + cuisineId + " не существует!"));
         nationalCuisine.setCuisine(updateCuisineRequest.getCuisine());
-        nationalCuisineRepository.save(nationalCuisine);
+        return nationalCuisineRepository.save(nationalCuisine);
     }
 
     public NationalCuisine getCuisine(Long cuisineId) {

@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -72,7 +71,7 @@ public class RecipeService {
         recipeRepository.delete(recipe);
     }
 
-    public void updateRecipe(String login, Long id, UpdateRecipeRequest updateRecipeRequest) {
+    public RecipeOnReview updateRecipe(String login, Long id, UpdateRecipeRequest updateRecipeRequest) {
         Recipe recipe = findRecipeById(id);
         User user = userService.findUserByLogin(login);
         checkUserOnRecipeOwner(user, recipe);
@@ -93,7 +92,7 @@ public class RecipeService {
         recipeOnReview.setDescription(updateRecipeRequest.getDescription());
         recipeOnReview.setCountPortion(updateRecipeRequest.getCountPortion());
         recipeOnReview.setUpdateRecipe(id);
-        recipeOnReviewRepository.save(recipeOnReview);
+        return recipeOnReviewRepository.save(recipeOnReview);
     }
 
     public Page<Recipe> getAllRecipes(int page, int size, String sortOrder) {

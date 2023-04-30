@@ -39,7 +39,7 @@ public class RecipeOnReview {
     @ManyToOne(fetch = FetchType.EAGER)
     private Dish dish;
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(cascade = {CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "recipe_on_review_tastes",
             joinColumns = {@JoinColumn(name = "recipe_id")},

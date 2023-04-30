@@ -3,25 +3,18 @@ package com.example.blps_lab1.controller;
 import com.example.blps_lab1.config.jwt.AuthTokenFilter;
 import com.example.blps_lab1.config.jwt.JwtUtils;
 import com.example.blps_lab1.dto.request.AddCulinaryNewRequest;
-import com.example.blps_lab1.dto.request.AddRecipeRequest;
-import com.example.blps_lab1.dto.response.RecipeResponse;
-import com.example.blps_lab1.model.basic.Recipe;
 import com.example.blps_lab1.model.extended.CulinaryNews;
 import com.example.blps_lab1.service.CulinaryNewsService;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@Validated
 @RequestMapping("/culinary-news")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CulinaryNewsController {
@@ -38,29 +31,24 @@ public class CulinaryNewsController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    @ResponseStatus
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
-    public ResponseEntity<?> newCulinaryNew(@Valid @RequestBody AddCulinaryNewRequest addCulinaryNewRequest,
-                                            HttpServletRequest httpServletRequest) {
+    public CulinaryNews newCulinaryNew(@Valid @RequestBody AddCulinaryNewRequest addCulinaryNewRequest,
+                                       HttpServletRequest httpServletRequest) {
         String login = jwtUtils.getLoginFromJwtToken(authTokenFilter.parseJwt(httpServletRequest));
-
-        CulinaryNews culinaryNew = culinaryNewsService.saveCulinaryNew(login, addCulinaryNewRequest);
-
-        return new ResponseEntity<>(culinaryNew, HttpStatus.CREATED);
+        return culinaryNewsService.saveCulinaryNew(login, addCulinaryNewRequest);
     }
 
     @GetMapping()
-    public ResponseEntity<?> getAllCulinaryNews(@RequestParam(defaultValue = "0") int page,
-                                                @RequestParam(defaultValue = "10") int size,
-                                                @RequestParam(defaultValue = "DESC") Sort.Direction sortOrder) {
-        List<CulinaryNews> allCulinaryNews = culinaryNewsService.getAllCulinaryNews(page, size, sortOrder.toString()).getContent();
-        return new ResponseEntity<>(allCulinaryNews, HttpStatus.OK);
+    public List<CulinaryNews> getAllCulinaryNews(@RequestParam(defaultValue = "0") int page,
+                                                 @RequestParam(defaultValue = "10") int size,
+                                                 @RequestParam(defaultValue = "DESC") Sort.Direction sortOrder) {
+        return culinaryNewsService.getAllCulinaryNews(page, size, sortOrder.toString()).getContent();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getCulinaryNew(@PathVariable Long id) {
-        CulinaryNews culinaryNew = culinaryNewsService.findCulinaryNewById(id);
-        return new ResponseEntity<>(culinaryNew, HttpStatus.OK);
+    public CulinaryNews getCulinaryNew(@PathVariable Long id) {
+        return culinaryNewsService.findCulinaryNewById(id);
     }
 
 

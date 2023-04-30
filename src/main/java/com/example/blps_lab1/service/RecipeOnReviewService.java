@@ -1,6 +1,7 @@
 package com.example.blps_lab1.service;
 
 import com.example.blps_lab1.dto.request.AddRecipeRequest;
+import com.example.blps_lab1.dto.response.RecipeResponse;
 import com.example.blps_lab1.exception.PermissionDeniedException;
 import com.example.blps_lab1.model.basic.*;
 import com.example.blps_lab1.repository.basic.RecipeOnReviewRepository;
@@ -45,10 +46,10 @@ public class RecipeOnReviewService {
     }
 
     @Transactional(transactionManager = "transactionManager")
-    public void saveRecipe(Long id) {
+    public Recipe saveRecipe(Long id) {
         Optional<RecipeOnReview> recipe = recipeOnReviewRepository.findById(id);
-        if (recipe.isEmpty()){
-            throw new PermissionDeniedException("Рецепта с id="+id+" не существует!");
+        if (recipe.isEmpty()) {
+            throw new PermissionDeniedException("Рецепта с id=" + id + " не существует!");
         }
         Recipe recipe1 = new Recipe();
         Dish dish = dishService.findDishByName(recipe.get().getDish().getName());
@@ -64,20 +65,22 @@ public class RecipeOnReviewService {
         recipe1.setCountPortion(recipe.get().getCountPortion());
         recipe1.setNationalCuisine(nationalCuisine);
         recipe1.setUser(user);
-        if (recipe.get().getUpdateRecipe()!=null){
+        if (recipe.get().getUpdateRecipe() != null) {
             recipeRepository.deleteById(recipe.get().getUpdateRecipe());
         }
-        recipeRepository.save(recipe1);
+        recipeOnReviewRepository.deleteById(id);
+        return recipeRepository.save(recipe1);
+
+    }
+
+    public void deleteRecipe(Long id) {
+        Optional<RecipeOnReview> recipe = recipeOnReviewRepository.findById(id);
+        if (recipe.isEmpty()) {
+            throw new PermissionDeniedException("Рецепта с id=" + id + " не существует!");
+        }
         recipeOnReviewRepository.deleteById(id);
     }
 
-    public void deleteRecipe(Long id){
-        Optional<RecipeOnReview> recipe = recipeOnReviewRepository.findById(id);
-        if (recipe.isEmpty()){
-            throw new PermissionDeniedException("Рецепта с id="+id+" не существует!");
-        }
-        recipeOnReviewRepository.deleteById(id);
-    }
     public Page<RecipeOnReview> getAllRecipesOnReview(int page, int size, String sortOrder) {
         Sort.Direction direction = Sort.Direction.fromString(sortOrder);
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "id"));

@@ -24,11 +24,11 @@ public class DishService {
         return dishRepository.findDishByName(name).orElseThrow(() -> new ResourceNotFoundException("Блюдо " + name + " не найдено"));
     }
 
-    public void saveDish(AddDishRequest addDishRequest) {
+    public Dish saveDish(AddDishRequest addDishRequest) {
         Dish dish = new Dish(addDishRequest.getDishName(), addDishRequest.getDescription());
         if (dishRepository.existsDishByName(addDishRequest.getDishName()))
             throw new ResourceAlreadyExistException("Блюдо " + addDishRequest.getDishName() + " уже есть в базе данных!");
-        dishRepository.save(dish);
+       return dishRepository.save(dish);
     }
 
     public void deleteDish(Long dishId) {
@@ -37,7 +37,7 @@ public class DishService {
         dishRepository.deleteById(dishId);
     }
 
-    public void updateDish(Long dishId, UpdateDishRequest updateDishRequest) {
+    public Dish updateDish(Long dishId, UpdateDishRequest updateDishRequest) {
         Dish dish = dishRepository.findDishById(dishId).orElseThrow(() -> new ResourceNotFoundException("Блюдо с id=" + dishId + " не существует!"));
         if (updateDishRequest.getName() != null) {
             dish.setName(updateDishRequest.getName());
@@ -45,7 +45,7 @@ public class DishService {
         if (updateDishRequest.getDescription() != null) {
             dish.setDescription(updateDishRequest.getDescription());
         }
-        dishRepository.save(dish);
+        return dishRepository.save(dish);
     }
 
     public Dish getDish(Long dishId) {
