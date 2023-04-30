@@ -4,7 +4,7 @@ import javax.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
-
+//TODO фикс
 @Entity(name = "refresh_token")
 @Data
 public class RefreshToken {

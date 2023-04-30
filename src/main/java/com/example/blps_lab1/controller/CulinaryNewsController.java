@@ -38,6 +38,7 @@ public class CulinaryNewsController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @ResponseStatus
     @PostMapping()
     public ResponseEntity<?> newCulinaryNew(@Valid @RequestBody AddCulinaryNewRequest addCulinaryNewRequest,
                                             HttpServletRequest httpServletRequest) {

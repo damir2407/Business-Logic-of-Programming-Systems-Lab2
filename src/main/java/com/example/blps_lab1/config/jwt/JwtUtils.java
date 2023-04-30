@@ -27,6 +27,7 @@ public class JwtUtils {
         CookUserDetails userPrincipal = (CookUserDetails) authentication.getPrincipal();
         return generateJwtToken(userPrincipal.getUsername());
     }
+    //add kid, issuer, role
     public String generateJwtToken(String login){
         return Jwts.builder().setSubject(login).setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
