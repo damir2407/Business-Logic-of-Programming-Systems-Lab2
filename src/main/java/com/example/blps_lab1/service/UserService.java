@@ -1,6 +1,6 @@
 package com.example.blps_lab1.service;
 
-import com.example.blps_lab1.config.jwt.JwtUtils;
+import com.example.blps_lab1.security.JwtUtils;
 import com.example.blps_lab1.dto.request.SignInRequest;
 import com.example.blps_lab1.dto.request.SignUpRequest;
 import com.example.blps_lab1.exception.ResourceAlreadyExistException;
@@ -48,7 +48,7 @@ public class UserService {
                         signInRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJWToken(authentication);
+        String jwt = jwtUtils.generateJWTToken(authentication);
         return new Jwt(jwt);
     }
 

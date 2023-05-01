@@ -1,7 +1,7 @@
 package com.example.blps_lab1.config;
 
-import com.example.blps_lab1.config.jwt.AuthEntryPointJwt;
-import com.example.blps_lab1.config.jwt.AuthTokenFilter;
+import com.example.blps_lab1.security.AuthEntryPointJwt;
+import com.example.blps_lab1.security.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -52,7 +52,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+        http.csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()

@@ -1,7 +1,7 @@
 package com.example.blps_lab1.controller;
 
-import com.example.blps_lab1.config.jwt.AuthTokenFilter;
-import com.example.blps_lab1.config.jwt.JwtUtils;
+import com.example.blps_lab1.security.AuthTokenFilter;
+import com.example.blps_lab1.security.JwtUtils;
 import com.example.blps_lab1.dto.request.AddCulinaryNewRequest;
 import com.example.blps_lab1.model.extended.CulinaryNews;
 import com.example.blps_lab1.service.CulinaryNewsService;

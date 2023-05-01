@@ -1,4 +1,4 @@
-package com.example.blps_lab1.config.jwt;
+package com.example.blps_lab1.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

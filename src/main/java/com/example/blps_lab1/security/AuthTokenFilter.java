@@ -1,6 +1,4 @@
-package com.example.blps_lab1.config.jwt;
-
-import com.example.blps_lab1.security.CookUserDetailsService;
+package com.example.blps_lab1.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,7 +44,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("Cannot authenticate user: {}",e.getMessage());
         }
         filterChain.doFilter(request, response);
 
