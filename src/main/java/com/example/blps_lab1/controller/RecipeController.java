@@ -13,7 +13,6 @@ import com.example.blps_lab1.service.RecipeOnReviewService;
 import com.example.blps_lab1.service.RecipeService;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -47,7 +46,6 @@ public class RecipeController {
         this.recipeDTOMapper = recipeDTOMapper;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public RecipeResponse newRecipe(@Valid @RequestBody AddRecipeRequest addRecipeRequest,
@@ -58,7 +56,6 @@ public class RecipeController {
 
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @DeleteMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRecipe(@RequestParam Long id, HttpServletRequest httpServletRequest) {
@@ -67,7 +64,6 @@ public class RecipeController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PutMapping()
     public RecipeResponse updateRecipe(@RequestParam Long id,
                                        @Valid @RequestBody UpdateRecipeRequest updateRecipeRequest,
@@ -93,21 +89,18 @@ public class RecipeController {
         return recipeDTOMapper.apply(recipe);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("accept/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public RecipeResponse acceptRecipe(@PathVariable Long id) {
         return recipeDTOMapper.apply(recipeOnReviewService.saveRecipe(id));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("decline/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void declineRecipe(@PathVariable Long id) {
         recipeOnReviewService.deleteRecipe(id);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/review")
     public List<RecipeResponse> getAllRecipesOnReview(@RequestParam(defaultValue = "0") int page,
                                                       @RequestParam(defaultValue = "10") int size,

@@ -7,7 +7,6 @@ import com.example.blps_lab1.model.extended.CulinaryNews;
 import com.example.blps_lab1.service.CulinaryNewsService;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +29,6 @@ public class CulinaryNewsController {
         this.culinaryNewsService = culinaryNewsService;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     public CulinaryNews newCulinaryNew(@Valid @RequestBody AddCulinaryNewRequest addCulinaryNewRequest,
