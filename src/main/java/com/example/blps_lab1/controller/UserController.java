@@ -8,7 +8,6 @@ import com.example.blps_lab1.dto.response.NewTokenResponse;
 import com.example.blps_lab1.dto.response.UserResponse;
 import com.example.blps_lab1.model.Jwt;
 import com.example.blps_lab1.model.basic.ERole;
-import com.example.blps_lab1.model.basic.RefreshToken;
 import com.example.blps_lab1.model.basic.User;
 import com.example.blps_lab1.service.RefreshTokenService;
 import com.example.blps_lab1.service.UserService;
@@ -28,6 +27,7 @@ public class UserController {
     private final RefreshTokenService refreshTokenService;
     private final UserDTOMapper userDTOMapper;
 
+
     public UserController(UserService userService, RefreshTokenService refreshTokenService, UserDTOMapper userDTOMapper) {
         this.userService = userService;
         this.refreshTokenService = refreshTokenService;
@@ -37,8 +37,8 @@ public class UserController {
     @PostMapping("login")
     public NewTokenResponse authUser(@Valid @RequestBody SignInRequest signInRequest) {
         Jwt jwt = userService.authUser(signInRequest);
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(signInRequest.getLogin());
-        return new NewTokenResponse(jwt.getToken(), refreshToken.getToken());
+        Jwt refreshJWT = refreshTokenService.createRefreshToken(signInRequest.getLogin());
+        return new NewTokenResponse(jwt.getToken(), refreshJWT.getToken());
     }
 
     @PostMapping()
