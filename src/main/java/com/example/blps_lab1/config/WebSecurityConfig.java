@@ -2,7 +2,6 @@ package com.example.blps_lab1.config;
 
 import com.example.blps_lab1.config.jwt.AuthEntryPointJwt;
 import com.example.blps_lab1.config.jwt.AuthTokenFilter;
-import com.example.blps_lab1.model.basic.ERole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableWebSecurity
@@ -26,8 +24,6 @@ public class WebSecurityConfig {
 
     private final AuthTokenFilter authenticationJwtTokenFilter;
 
-    private static final String RECIPE_ENDPOINT = "/recipe/**";
-    private static final String USER_ENDPOINT = "/user/**";
 
 
     @Autowired
