@@ -11,15 +11,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RefreshTokenService {
-    private final UserRepository userRepository;
     private final JwtUtils jwtUtils;
-    public RefreshTokenService( UserRepository userRepository, JwtUtils jwtUtils) {
-        this.userRepository = userRepository;
+    public RefreshTokenService(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
     }
 
     public Jwt createRefreshToken(String login){
-        return new Jwt(jwtUtils.getLoginFromJwtToken(login));
+        return new Jwt(jwtUtils.generateRefreshToken(login));
     }
     public NewTokenResponse createNewToken(RefreshTokenRequest refreshTokenRequest) {
         if (!jwtUtils.validateJwtToken(refreshTokenRequest.getRefreshToken())){
