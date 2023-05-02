@@ -70,10 +70,4 @@ public class UserController {
         return userDTOMapper.apply(admin);
     }
 
-    @PostMapping("logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
-        new SecurityContextLogoutHandler().logout(request, response, null);
-    }
-
-
 }
