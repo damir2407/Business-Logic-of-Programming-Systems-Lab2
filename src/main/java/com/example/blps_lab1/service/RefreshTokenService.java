@@ -23,11 +23,11 @@ public class RefreshTokenService {
 
     public Jwt createRefreshToken(String login) {
         CookUserDetails cookUserDetails = (CookUserDetails) cookUserDetailsService.loadUserByUsername(login);
-        return new Jwt(jwtUtils.generateRefreshToken(cookUserDetails));
+        return new Jwt(jwtUtils.generateRefreshToken(cookUserDetails.getUsername()));
     }
 
     public Jwt createRefreshToken(CookUserDetails cookUserDetails) {
-        return new Jwt(jwtUtils.generateRefreshToken(cookUserDetails));
+        return new Jwt(jwtUtils.generateRefreshToken(cookUserDetails.getUsername()));
     }
 
     public NewTokenResponse createNewToken(RefreshTokenRequest refreshTokenRequest) {
@@ -37,7 +37,7 @@ public class RefreshTokenService {
         String login = jwtUtils.getLoginFromJwtToken(refreshTokenRequest.getRefreshToken());
         CookUserDetails cookUserDetails = (CookUserDetails) cookUserDetailsService.loadUserByUsername(login);
 
-        Jwt token = new Jwt(jwtUtils.generateJWTToken(cookUserDetails));
+        Jwt token = new Jwt(jwtUtils.generateJWTToken(cookUserDetails.getUsername()));
         Jwt refreshToken = createRefreshToken(cookUserDetails);
         return new NewTokenResponse(token.getToken(), refreshToken.getToken());
     }

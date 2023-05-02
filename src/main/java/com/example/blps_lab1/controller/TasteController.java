@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/taste")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class TasteController {
     private final TastesService tastesService;
 

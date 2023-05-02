@@ -26,14 +26,14 @@ public class JwtUtils {
     @Value("${token.RTExpirationMs}")
     private long refreshExpirationMS;
 
-    public String generateToken(CookUserDetails cookUserDetails, long time) {
+    public String generateToken(String login, long time) {
         Instant now = Instant.now();
         ZoneId utcZone = ZoneId.of("UTC");
         ZonedDateTime utcNow = ZonedDateTime.ofInstant(now, utcZone);
         ZonedDateTime utcExpiration = utcNow.plus(Duration.ofMillis(time));
 
-        Claims claims = Jwts.claims().setSubject(cookUserDetails.getUsername());
-        claims.put("roles", cookUserDetails.getAuthorities());
+        Claims claims = Jwts.claims().setSubject(login);
+        claims.put("roles", login);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -46,15 +46,15 @@ public class JwtUtils {
 
     public String generateJWTToken(Authentication authentication) {
         CookUserDetails userPrincipal = (CookUserDetails) authentication.getPrincipal();
-        return generateJWTToken(userPrincipal);
+        return generateJWTToken(userPrincipal.getUsername());
     }
 
-    public String generateJWTToken(CookUserDetails cookUserDetails) {
-        return generateToken(cookUserDetails, jwtExpirationMs);
+    public String generateJWTToken(String login) {
+        return generateToken(login, jwtExpirationMs);
     }
 
-    public String generateRefreshToken(CookUserDetails cookUserDetails) {
-        return generateToken(cookUserDetails, refreshExpirationMS);
+    public String generateRefreshToken(String login) {
+        return generateToken(login, refreshExpirationMS);
     }
 
     public boolean validateJwtToken(String jwt) {

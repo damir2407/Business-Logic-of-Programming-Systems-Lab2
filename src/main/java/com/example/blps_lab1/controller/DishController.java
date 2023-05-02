@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/dish")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class DishController {
     private final DishService dishService;
 
