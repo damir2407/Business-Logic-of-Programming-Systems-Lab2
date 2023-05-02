@@ -67,7 +67,7 @@ public class WebSecurityConfig {
                 .antMatchers("/cuisine/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.GET, "/cuisine/**").hasAuthority("ROLE_USER")
 
-                .antMatchers(HttpMethod.POST, "/culinary-news/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST, "/culinary-news/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
                 .antMatchers(HttpMethod.GET, "/culinary-news/**").permitAll()
 
                 .antMatchers("/dish/**").hasAuthority("ROLE_ADMIN")
