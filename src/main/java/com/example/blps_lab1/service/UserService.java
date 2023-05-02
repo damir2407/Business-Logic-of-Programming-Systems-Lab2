@@ -51,8 +51,8 @@ public class UserService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         CookUserDetails userDetails = (CookUserDetails) authentication.getDetails();
-        String accessToken = jwtUtils.generateJWTToken(userDetails.getUsername(), (Set<Role>) userDetails.getAuthorities());
-        String refreshToken = jwtUtils.generateRefreshToken(userDetails.getUsername(), (Set<Role>) userDetails.getAuthorities());
+        String accessToken = jwtUtils.generateJWTToken(userDetails.getUsername(), userDetails.getAuthorities());
+        String refreshToken = jwtUtils.generateRefreshToken(userDetails.getUsername(),  userDetails.getAuthorities());
         return new AccessAndRefreshToken(accessToken, refreshToken);
     }
 

@@ -33,13 +33,9 @@ public class CookUserDetails implements UserDetails {
     }
 
 
-    public static CookUserDetails build(String login, Set<Role> roleSet) {
+    public static CookUserDetails build(String login, Collection<? extends GrantedAuthority> roles) {
 
-        List<GrantedAuthority> authorities = roleSet.stream()
-                .map(roles -> new SimpleGrantedAuthority(roles.getName().name()))
-                .collect(Collectors.toList());
-
-        return new CookUserDetails(login, authorities);
+        return new CookUserDetails(login, roles);
     }
 
     @Override

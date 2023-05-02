@@ -41,7 +41,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
 
                 UserDetails userDetails = cookUserDetailsService.loadUserByUsernameAndRoles(login,
-                        (Set<Role>) jwtUtils.getAuthoritiesFromToken(jwt));
+                         jwtUtils.getAuthoritiesFromToken(jwt));
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,
                         null,
                         userDetails.getAuthorities());

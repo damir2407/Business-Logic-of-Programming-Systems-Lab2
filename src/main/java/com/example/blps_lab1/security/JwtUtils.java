@@ -1,11 +1,11 @@
 package com.example.blps_lab1.security;
 
-import com.example.blps_lab1.model.basic.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -13,8 +13,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 @Component
 @Slf4j
@@ -29,14 +29,14 @@ public class JwtUtils {
     @Value("${token.RTExpirationMs}")
     private long refreshExpirationMS;
 
-    public String generateToken(String login, Set<Role> roleSet, long time) {
+    public String generateToken(String login,Collection<? extends GrantedAuthority> roles , long time) {
         Instant now = Instant.now();
         ZoneId utcZone = ZoneId.of("UTC");
         ZonedDateTime utcNow = ZonedDateTime.ofInstant(now, utcZone);
         ZonedDateTime utcExpiration = utcNow.plus(Duration.ofMillis(time));
 
         Claims claims = Jwts.claims().setSubject(login);
-        claims.put("authorities", roleSet);
+        claims.put("authorities", roles);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -47,12 +47,12 @@ public class JwtUtils {
                 .compact();
     }
 
-    public String generateJWTToken(String login, Set<Role> roles) {
+    public String generateJWTToken(String login, Collection<? extends GrantedAuthority> roles) {
         return generateToken(login, roles, jwtExpirationMs);
     }
 
 
-    public String generateRefreshToken(String login, Set<Role> roles) {
+    public String generateRefreshToken(String login, Collection<? extends GrantedAuthority> roles) {
         return generateToken(login, roles, refreshExpirationMS);
     }
 
@@ -83,8 +83,8 @@ public class JwtUtils {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody().getSubject();
     }
 
-    public Set<Role> getAuthoritiesFromToken(String jwt){
-        return (Set<Role>) Jwts.parserBuilder().setSigningKey(key).build().
+    public Collection<? extends GrantedAuthority> getAuthoritiesFromToken(String jwt){
+        return (Collection<? extends GrantedAuthority>) Jwts.parserBuilder().setSigningKey(key).build().
                 parseClaimsJws(jwt).getBody().get("authorities");
     }
 
