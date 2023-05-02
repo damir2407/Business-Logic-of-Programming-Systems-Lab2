@@ -1,5 +1,6 @@
 package com.example.blps_lab1.security;
 
+import com.example.blps_lab1.model.basic.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 
 @Component
 @Slf4j
@@ -33,9 +35,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+            if (jwt != null && jwtUtils.validateJwtToken(jwt)
+                    && SecurityContextHolder.getContext().getAuthentication() == null) {
                 String login = jwtUtils.getLoginFromJwtToken(jwt);
-                UserDetails userDetails = cookUserDetailsService.loadUserByUsername(login);
+
+
+                UserDetails userDetails = cookUserDetailsService.loadUserByUsernameAndRoles(login,
+                        (Set<Role>) jwtUtils.getAuthoritiesFromToken(jwt));
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,
                         null,
                         userDetails.getAuthorities());
@@ -44,7 +50,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         } catch (Exception e) {
-            log.error("Cannot authenticate user: {}",e.getMessage());
+            log.error("Cannot authenticate user: {}", e.getMessage());
         }
         filterChain.doFilter(request, response);
 

@@ -6,6 +6,7 @@ import com.example.blps_lab1.dto.request.SignInRequest;
 import com.example.blps_lab1.dto.request.SignUpRequest;
 import com.example.blps_lab1.dto.response.NewTokenResponse;
 import com.example.blps_lab1.dto.response.UserResponse;
+import com.example.blps_lab1.model.AccessAndRefreshToken;
 import com.example.blps_lab1.model.Jwt;
 import com.example.blps_lab1.model.basic.ERole;
 import com.example.blps_lab1.model.basic.User;
@@ -43,10 +44,8 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public NewTokenResponse authUser(@Valid @RequestBody SignInRequest signInRequest) {
-        Jwt jwt = userService.authUser(signInRequest);
-        Jwt refreshJWT = refreshTokenService.createRefreshToken(signInRequest.getLogin());
-        return new NewTokenResponse(jwt.getToken(), refreshJWT.getToken());
+    public AccessAndRefreshToken authUser(@Valid @RequestBody SignInRequest signInRequest) {
+        return userService.authUser(signInRequest);
     }
 
     @PostMapping()
@@ -70,10 +69,6 @@ public class UserController {
         return userDTOMapper.apply(admin);
     }
 
-    @PostMapping("logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
-        new SecurityContextLogoutHandler().logout(request, response, null);
-    }
 
 
 }

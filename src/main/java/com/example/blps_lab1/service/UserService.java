@@ -1,5 +1,7 @@
 package com.example.blps_lab1.service;
 
+import com.example.blps_lab1.model.AccessAndRefreshToken;
+import com.example.blps_lab1.security.CookUserDetails;
 import com.example.blps_lab1.security.JwtUtils;
 import com.example.blps_lab1.dto.request.SignInRequest;
 import com.example.blps_lab1.dto.request.SignUpRequest;
@@ -41,15 +43,17 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
-    public Jwt authUser(SignInRequest signInRequest) {
+    public AccessAndRefreshToken authUser(SignInRequest signInRequest) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         signInRequest.getLogin(),
                         signInRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJWTToken(authentication);
-        return new Jwt(jwt);
+        CookUserDetails userDetails = (CookUserDetails) authentication.getDetails();
+        String accessToken = jwtUtils.generateJWTToken(userDetails.getUsername(), (Set<Role>) userDetails.getAuthorities());
+        String refreshToken = jwtUtils.generateRefreshToken(userDetails.getUsername(), (Set<Role>) userDetails.getAuthorities());
+        return new AccessAndRefreshToken(accessToken, refreshToken);
     }
 
     public User findUserByLogin(String login) {
