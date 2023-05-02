@@ -27,6 +27,13 @@ public class CookUserDetails implements UserDetails {
         this.authorities = authorities;
     }
 
+    public CookUserDetails(String login, String password, String email, Collection<? extends GrantedAuthority> authorities) {
+        this.login= login;
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
@@ -36,6 +43,15 @@ public class CookUserDetails implements UserDetails {
     public static CookUserDetails build(String login, Collection<? extends GrantedAuthority> roles) {
 
         return new CookUserDetails(login, roles);
+    }
+
+    public static CookUserDetails build(User user) {
+
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(roles -> new SimpleGrantedAuthority(roles.getName().name()))
+                .collect(Collectors.toList());
+
+        return new CookUserDetails(user.getLogin(), user.getPassword(), user.getEmail(), authorities);
     }
 
     @Override

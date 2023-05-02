@@ -2,13 +2,13 @@ package com.example.blps_lab1.service;
 
 import com.example.blps_lab1.model.AccessAndRefreshToken;
 import com.example.blps_lab1.security.CookUserDetails;
+import com.example.blps_lab1.security.CookUserDetailsService;
 import com.example.blps_lab1.security.JwtUtils;
 import com.example.blps_lab1.dto.request.SignInRequest;
 import com.example.blps_lab1.dto.request.SignUpRequest;
 import com.example.blps_lab1.exception.ResourceAlreadyExistException;
 import com.example.blps_lab1.exception.ResourceNotFoundException;
 import com.example.blps_lab1.model.basic.ERole;
-import com.example.blps_lab1.model.Jwt;
 import com.example.blps_lab1.model.basic.Role;
 import com.example.blps_lab1.model.basic.User;
 import com.example.blps_lab1.repository.basic.RoleRepository;
@@ -17,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,24 +34,30 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
 
+    private final CookUserDetailsService cookUserDetailsService;
+
+
+
     public UserService(AuthenticationManager authenticationManager,
                        JwtUtils jwtUtils, UserRepository userRepository,
-                       PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+                       PasswordEncoder passwordEncoder, RoleRepository roleRepository, CookUserDetailsService cookUserDetailsService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+        this.cookUserDetailsService = cookUserDetailsService;
     }
 
     public AccessAndRefreshToken authUser(SignInRequest signInRequest) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(
-                        signInRequest.getLogin(),
-                        signInRequest.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        CookUserDetails userDetails = (CookUserDetails) authentication.getDetails();
+        UserDetails userDetails = cookUserDetailsService.loadUserByUsername(signInRequest.getLogin());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,
+                null,
+                userDetails.getAuthorities());
+
+
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         String accessToken = jwtUtils.generateJWTToken(userDetails.getUsername(), userDetails.getAuthorities());
         String refreshToken = jwtUtils.generateRefreshToken(userDetails.getUsername(),  userDetails.getAuthorities());
         return new AccessAndRefreshToken(accessToken, refreshToken);
