@@ -35,8 +35,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-            if (jwt != null && jwtUtils.validateJwtToken(jwt)
-                    && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 String login = jwtUtils.getLoginFromJwtToken(jwt);
 
 

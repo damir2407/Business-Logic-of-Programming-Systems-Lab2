@@ -6,6 +6,7 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -13,8 +14,11 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -29,14 +33,16 @@ public class JwtUtils {
     @Value("${token.RTExpirationMs}")
     private long refreshExpirationMS;
 
-    public String generateToken(String login,Collection<? extends GrantedAuthority> roles , long time) {
+    public String generateToken(String login, Collection<? extends GrantedAuthority> roles, long time) {
         Instant now = Instant.now();
         ZoneId utcZone = ZoneId.of("UTC");
         ZonedDateTime utcNow = ZonedDateTime.ofInstant(now, utcZone);
         ZonedDateTime utcExpiration = utcNow.plus(Duration.ofMillis(time));
-
+        List<String> authorities = roles.stream().map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
         Claims claims = Jwts.claims().setSubject(login);
-        claims.put("authorities", roles);
+        claims.put("authorities", authorities);
+
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -83,9 +89,14 @@ public class JwtUtils {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody().getSubject();
     }
 
-    public Collection<? extends GrantedAuthority> getAuthoritiesFromToken(String jwt){
-        return (Collection<? extends GrantedAuthority>) Jwts.parserBuilder().setSigningKey(key).build().
+    public Collection<? extends GrantedAuthority> getAuthoritiesFromToken(String jwt) {
+        List<String> authoritiesStr = (List<String>) Jwts.parserBuilder().setSigningKey(key).build().
                 parseClaimsJws(jwt).getBody().get("authorities");
+        List<GrantedAuthority> authorities = authoritiesStr.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+        System.out.println(authorities);
+        return authorities;
     }
 
 }
