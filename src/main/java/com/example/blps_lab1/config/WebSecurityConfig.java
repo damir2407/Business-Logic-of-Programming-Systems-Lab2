@@ -64,30 +64,30 @@ public class WebSecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()
-                .antMatchers("/cuisine/**").hasRole("ROLE_ADMIN")
-                .antMatchers(HttpMethod.GET, "/cuisine/**").hasRole("ROLE_USER")
+                .antMatchers("/cuisine/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.GET, "/cuisine/**").hasAuthority("ROLE_USER")
 
-                .antMatchers(HttpMethod.POST, "/culinary-news/**").hasAnyRole("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST, "/culinary-news/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.GET, "/culinary-news/**").permitAll()
 
-                .antMatchers("/dish/**").hasRole("ROLE_ADMIN")
-                .antMatchers(HttpMethod.GET, "/dish/**").hasRole("ROLE_USER")
+                .antMatchers("/dish/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.GET, "/dish/**").hasAuthority("ROLE_USER")
 
-                .antMatchers("/ingredient/**").hasRole("ROLE_ADMIN")
-                .antMatchers(HttpMethod.GET, "/ingredient/**").hasRole("ROLE_USER")
+                .antMatchers("/ingredient/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.GET, "/ingredient/**").hasAuthority("ROLE_USER")
 
-                .antMatchers("/taste/**").hasRole("ROLE_ADMIN")
-                .antMatchers(HttpMethod.GET, "/taste/**").hasRole("ROLE_USER")
+                .antMatchers("/taste/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.GET, "/taste/**").hasAuthority("ROLE_USER")
 
-                .antMatchers(HttpMethod.GET, "/recipe").hasAnyRole("ROLE_ADMIN", "ROLE_USER")
-                .antMatchers(HttpMethod.POST, "/recipe").hasAnyRole("ROLE_ADMIN", "ROLE_USER")
-                .antMatchers(HttpMethod.DELETE, "/recipe").hasAnyRole("ROLE_ADMIN", "ROLE_USER")
-                .antMatchers(HttpMethod.PUT, "/recipe").hasAnyRole("ROLE_ADMIN", "ROLE_USER")
-                .antMatchers("/recipe/review").hasRole("ROLE_ADMIN")
-                .antMatchers(HttpMethod.PUT, "/recipe/accept/**").hasRole("ROLE_ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/recipe/decline/**").hasRole("ROLE_ADMIN")
+                .antMatchers(HttpMethod.GET, "/recipe").permitAll()
+                .antMatchers(HttpMethod.POST, "/recipe").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                .antMatchers(HttpMethod.DELETE, "/recipe").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                .antMatchers(HttpMethod.PUT, "/recipe").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                .antMatchers("/recipe/review").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/recipe/accept/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/recipe/decline/**").hasAuthority("ROLE_ADMIN")
 
-                .antMatchers(HttpMethod.POST, "/user/admin-create").hasRole("ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST, "/user/admin-create").hasAuthority("ROLE_ADMIN")
                 .anyRequest().permitAll();
 
         http.addFilterBefore(authenticationJwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

@@ -5,6 +5,7 @@ import com.example.blps_lab1.dto.request.UpdateCuisineRequest;
 import com.example.blps_lab1.model.basic.NationalCuisine;
 import com.example.blps_lab1.service.NationalCuisineService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

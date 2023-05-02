@@ -33,7 +33,7 @@ public class JwtUtils {
         ZonedDateTime utcExpiration = utcNow.plus(Duration.ofMillis(time));
 
         Claims claims = Jwts.claims().setSubject(login);
-        claims.put("roles", login);
+
 
         return Jwts.builder()
                 .setClaims(claims)
