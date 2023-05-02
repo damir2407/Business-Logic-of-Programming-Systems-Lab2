@@ -24,11 +24,12 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
     private final UserService userService;
@@ -36,17 +37,34 @@ public class UserController {
     private final UserDTOMapper userDTOMapper;
 
 
-    public UserController(UserService userService, RefreshTokenService refreshTokenService, UserDTOMapper userDTOMapper ) {
+    private final SessionRegistry sessionRegistry;
+
+    public List<SessionInformation> getAllSessions() {
+        List<Object> principals = sessionRegistry.getAllPrincipals();
+        List<SessionInformation> activeSessions = new ArrayList<>();
+        for (Object principal : principals) {
+            List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(principal, false);
+            activeSessions.addAll(sessionsInfo);
+        }
+        return activeSessions;
+    }
+
+
+    public UserController(UserService userService,
+                          RefreshTokenService refreshTokenService,
+                          UserDTOMapper userDTOMapper,
+                          SessionRegistry sessionRegistry) {
         this.userService = userService;
         this.refreshTokenService = refreshTokenService;
         this.userDTOMapper = userDTOMapper;
-
+        this.sessionRegistry = sessionRegistry;
     }
 
     @PostMapping("login")
     public NewTokenResponse authUser(@Valid @RequestBody SignInRequest signInRequest) {
         Jwt jwt = userService.authUser(signInRequest);
         Jwt refreshJWT = refreshTokenService.createRefreshToken(signInRequest.getLogin());
+        System.out.println(getAllSessions());
         return new NewTokenResponse(jwt.getToken(), refreshJWT.getToken());
     }
 
@@ -75,7 +93,6 @@ public class UserController {
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, null);
     }
-
 
 
 }
