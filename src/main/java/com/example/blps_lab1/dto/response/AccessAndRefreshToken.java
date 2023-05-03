@@ -1,4 +1,4 @@
-package com.example.blps_lab1.model;
+package com.example.blps_lab1.dto.response;
 
 public class AccessAndRefreshToken {
     private String accessToken;

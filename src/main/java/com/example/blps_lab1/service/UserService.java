@@ -1,7 +1,6 @@
 package com.example.blps_lab1.service;
 
-import com.example.blps_lab1.model.AccessAndRefreshToken;
-import com.example.blps_lab1.security.CookUserDetails;
+import com.example.blps_lab1.dto.response.AccessAndRefreshToken;
 import com.example.blps_lab1.security.CookUserDetailsService;
 import com.example.blps_lab1.security.JwtUtils;
 import com.example.blps_lab1.dto.request.SignInRequest;
@@ -14,9 +13,6 @@ import com.example.blps_lab1.model.basic.User;
 import com.example.blps_lab1.repository.basic.RoleRepository;
 import com.example.blps_lab1.repository.basic.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,14 +46,7 @@ public class UserService {
     }
 
     public AccessAndRefreshToken authUser(SignInRequest signInRequest) {
-
         UserDetails userDetails = cookUserDetailsService.loadUserByUsername(signInRequest.getLogin());
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,
-                null,
-                userDetails.getAuthorities());
-
-
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         String accessToken = jwtUtils.generateJWTToken(userDetails.getUsername(), userDetails.getAuthorities());
         String refreshToken = jwtUtils.generateRefreshToken(userDetails.getUsername(),  userDetails.getAuthorities());
         return new AccessAndRefreshToken(accessToken, refreshToken);

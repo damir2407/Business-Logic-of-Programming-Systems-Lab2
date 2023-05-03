@@ -35,29 +35,27 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+            if (jwt != null && jwtUtils.validateJwtToken(jwt)
+                    && SecurityContextHolder.getContext().getAuthentication() == null) {
                 String login = jwtUtils.getLoginFromJwtToken(jwt);
-
-
                 UserDetails userDetails = cookUserDetailsService.loadUserByUsernameAndRoles(login,
-                         jwtUtils.getAuthoritiesFromToken(jwt));
+                        jwtUtils.getAuthoritiesFromToken(jwt));
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,
                         null,
                         userDetails.getAuthorities());
-                System.out.println(userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
+            filterChain.doFilter(request, response);
         } catch (Exception e) {
+            System.out.println("Jopa");
+            SecurityContextHolder.clearContext();
             log.error("Cannot authenticate user: {}", e.getMessage());
         }
-        filterChain.doFilter(request, response);
-
     }
 
     public String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
-
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
             return headerAuth.substring(7);
         }

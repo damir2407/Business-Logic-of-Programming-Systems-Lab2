@@ -95,7 +95,6 @@ public class JwtUtils {
         List<GrantedAuthority> authorities = authoritiesStr.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-        System.out.println(authorities);
         return authorities;
     }
 

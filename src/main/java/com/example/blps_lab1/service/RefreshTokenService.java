@@ -4,8 +4,6 @@ import com.example.blps_lab1.security.JwtUtils;
 import com.example.blps_lab1.dto.request.RefreshTokenRequest;
 import com.example.blps_lab1.dto.response.NewTokenResponse;
 import com.example.blps_lab1.exception.TokenHasExpiredException;
-import com.example.blps_lab1.model.Jwt;
-import com.example.blps_lab1.security.CookUserDetails;
 import com.example.blps_lab1.security.CookUserDetailsService;
 import org.springframework.stereotype.Service;
 
