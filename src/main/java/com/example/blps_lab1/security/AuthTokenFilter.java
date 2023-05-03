@@ -32,23 +32,21 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+                                    FilterChain filterChain) {
         try {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)
                     && SecurityContextHolder.getContext().getAuthentication() == null) {
                 String login = jwtUtils.getLoginFromJwtToken(jwt);
-                UserDetails userDetails = cookUserDetailsService.loadUserByUsernameAndRoles(login,
-                        jwtUtils.getAuthoritiesFromToken(jwt));
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,
-                        null,
-                        userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken authenticationToken =
+                        new UsernamePasswordAuthenticationToken(login,
+                                null,
+                                jwtUtils.getAuthoritiesFromToken(jwt));
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            System.out.println("Jopa");
             SecurityContextHolder.clearContext();
             log.error("Cannot authenticate user: {}", e.getMessage());
         }
